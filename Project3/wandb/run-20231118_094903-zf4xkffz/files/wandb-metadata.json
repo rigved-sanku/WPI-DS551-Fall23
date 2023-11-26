@@ -1,0 +1,49 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.8.8",
+    "heartbeatAt": "2023-11-18T14:49:06.373540",
+    "startedAt": "2023-11-18T14:49:03.857399",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--train_dqn"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "host": "Rigved",
+    "username": "sanku",
+    "executable": "C:\\Users\\sanku\\OneDrive\\Desktop\\Reinforcement Learning\\WPI-DS551-Fall23\\Project3\\.venv\\Scripts\\python.exe",
+    "cpu_count": 10,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 1700.0,
+        "min": 0.0,
+        "max": 1700.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1700.0,
+            "min": 0.0,
+            "max": 1700.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 243.01952743530273,
+            "used": 220.87981414794922
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 4GB Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 4GB Laptop GPU",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 31.71782684326172
+    }
+}

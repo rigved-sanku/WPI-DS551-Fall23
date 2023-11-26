@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import torch.nn as nn
+import torch
 import torch.nn.functional as F
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class DQN(nn.Module):
     """Initialize a deep Q-learning network
@@ -27,18 +29,52 @@ class DQN(nn.Module):
         In the constructor we instantiate modules and assign them as
         member variables.
         """
-        super(DQN, self).__init__()
-        ###########################
-        # YOUR IMPLEMENTATION HERE #
+        #initialize the attributes or perform certain setup steps /
+        # defined in the parent class before adding additional functionality in the derived class.
+        # Calling the constructor of the parent class (nn.Module)
+        super(DQN, self).__init__() 
 
+        # This line stores the number of possible actions in the class instance variable num_actions.
+        self.num_actions = num_actions
+         
+        # 3 convolutional layers with ReLU activation functions. 
+        # The convolutional layers are designed to process the input frames (states) and extract features. 
+        self.network=nn.Sequential(
+            nn.Conv2d(in_channels, 32, kernel_size=8, stride=4),
+            nn.ReLU(),
+            nn.Conv2d(32, 64, kernel_size=4, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1),
+            nn.ReLU(),
+        )
+
+        # Height and Width of the feature maps after the convolutional layers 
+        h = w = self.conv_size(9,3,1)
+
+        # Calculate the total size of the flattened input to the fully connected layers.
+        self.input_sz = int(h*w*64)
+
+        # 
+        self.qvals = nn.Sequential(
+            nn.Linear(self.input_sz, 512),
+            nn.ReLU(),
+            nn.Linear(512, self.num_actions))
+    
+    # This static method computes the size of the feature map 
+    # after a convolutional layer based on the input size, kernel size, and stride.
+
+    @staticmethod
+    def conv_size(size,kernel_size,stride):
+        s=(size-(kernel_size-1)-1) / stride + 1
+        return s 
+
+    # The forward method defines the forward pass of the neural network. 
+    # It takes an input tensor x (representing a batch of frames), processes it through the convolutional layers, flattens the output, 
+    # and passes it through the fully connected layers to obtain the Q-values for each possible action.
+    
     def forward(self, x):
-        """
-        In the forward function we accept a Tensor of input data and we must return
-        a Tensor of output data. We can use Modules defined in the constructor as
-        well as arbitrary operators on Tensors.
-        """
-        ###########################
-        # YOUR IMPLEMENTATION HERE #
-
-        ###########################
-        return x
+        x=x.to(device)
+        x=self.network(x)
+        x=x.view(x.size(0),-1)
+        Qvals=self.qvals(x)
+        return Qvals

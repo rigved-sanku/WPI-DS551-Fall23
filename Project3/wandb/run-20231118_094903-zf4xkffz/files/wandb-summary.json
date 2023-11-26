@@ -1,0 +1,1 @@
+{"reward": 0.33, "episode": 78100, "epsilon": 0.02500456544993319, "timestamp": 98, "_timestamp": 1700531268.6475112, "_runtime": 212324.78181934357, "_step": 80526, "loss": 0.0014192147412635248, "exp_reward": 0.32, "_wandb": {"runtime": 212322}}

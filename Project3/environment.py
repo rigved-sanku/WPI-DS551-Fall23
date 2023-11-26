@@ -4,10 +4,10 @@
 You DO NOT need to upload this file
 
 """
-import gym
+import gymnasium as gym
 import numpy as np
 from atari_wrapper import make_wrap_atari
-
+# from Working.DS551.proj3.solution1.atari_wrapper2022 import make_wrap_atari
 
 class Environment(object):
     def __init__(self, env_name, args, atari_wrapper=False, test=False, render_mode=None):
@@ -15,7 +15,7 @@ class Environment(object):
             clip_rewards = not test
             self.env = make_wrap_atari(env_name, clip_rewards, render_mode=render_mode)
         else:
-            self.env = gym.make(env_name, new_step_api=True, render_mode=render_mode)
+            self.env = gym.make(env_name, render_mode=render_mode)
 
         self.action_space = self.env.action_space
         self.observation_space = self.env.observation_space
@@ -32,7 +32,7 @@ class Environment(object):
             observation: np.array
                 stack 4 last frames, shape: (84, 84, 4)
         '''
-        observation = self.env.reset()
+        observation, _ = self.env.reset()
 
         return np.array(observation)
 
@@ -66,3 +66,9 @@ class Environment(object):
 
     def get_random_action(self):
         return self.action_space.sample()
+
+    def close(self):
+        '''
+        close
+        '''
+        self.env.close()
